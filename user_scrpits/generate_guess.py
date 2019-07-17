@@ -67,3 +67,5 @@ def generate_guess(ngrid, tau_low, tau_up):
 
     
     
+# USAGE:
+generate_guess(61,1.2,-4.9)
