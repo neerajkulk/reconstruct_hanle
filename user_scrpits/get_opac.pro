@@ -1,7 +1,7 @@
 ; basic IDL routine to read line and continuum opacity of an
 ; atmosphere. Results are written into a .fits file. 
 
-; note need to run @initrh before this
+; note: need to run @initrh before this
 
 
 @files.common
