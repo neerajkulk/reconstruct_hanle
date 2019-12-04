@@ -3,3 +3,7 @@
 Tried to debug why calculation of scattering polarization is giving me very small intensities. I expect J ~ Planck function. In SI units, I expect J~ 10e-8.Problem boils down to my routine 'write_spherical_tensor' in formal.c
 
 I notice that replacing domg_dlam with wmu results in a J00 with the correct magnitude. Problem seems to ariese due to line->phi being a vary small number. Why? Ask han about this. 
+
+--- 4 Dec 2019 ---
+
+I suspect the problem is goming from wlambda. Not sure what units it is currently in or what units it's supposed to be in. Based on getlambda.c it seems that wlambda might be default normalized to the Dopplerwidth? Stop write things down and systematically figure it out. 
