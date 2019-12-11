@@ -7,3 +7,9 @@ I notice that replacing domg_dlam with wmu results in a J00 with the correct mag
 --- 4 Dec 2019 ---
 
 I suspect the problem is goming from wlambda. Not sure what units it is currently in or what units it's supposed to be in. Based on getlambda.c it seems that wlambda might be default normalized to the Dopplerwidth? Stop write things down and systematically figure it out. 
+
+--- 11 Dec 2019 ---
+
+Ivan helped me debug the unit mismatch. Turns out I was allocating memory for the spherical tensors inside the wavelength loop. Hence the results were not cumulatively added. I fixed this in 7298b97ea7251ee20c0889c75dac88b8a548ef99
+
+Even though the code runs fine on the 4x4 FALC test, it gives a segfault on the MURAM cube. I tried freeing the memory I allocated. I'll try running it again and seeing if it helps...
