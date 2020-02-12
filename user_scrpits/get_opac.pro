@@ -34,9 +34,10 @@ FOR l = 0, spectrum.nspect-1 DO BEGIN
    emis_c[*, *, *, l] = eta_c   
 ENDFOR
 
-mwrfits, opac_l, 'opac_l.fits'
-mwrfits, opac_c, 'opac_c.fits'
-mwrfits, emis_l, 'emis_l.fits'
-mwrfits, emis_c, 'emis_c.fits'
+writefits, 'opac_l.fits', opac_l
+writefits, 'opac_c.fits', opac_c
+writefits, 'emis_l.fits', emis_l
+writefits, 'emis_c.fits', emis_c
 
 end
+
