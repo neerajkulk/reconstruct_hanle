@@ -1,3 +1,6 @@
 *~
 *.atmos
 *.fits
+*.csv
+*.DS_Store
+*.ipynb_checkpoints/
