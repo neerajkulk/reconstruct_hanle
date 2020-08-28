@@ -1,3 +1,4 @@
+# Take big atmosphere and turn them into subcubes and also apodize the subcubes. 
 import numpy as np
 import muram as muram
 import matplotlib.pyplot as plt
