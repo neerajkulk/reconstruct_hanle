@@ -1,3 +1,15 @@
+import numpy as np
+import muram as muram
+import matplotlib.pyplot as plt
+import sys
+sys.path.append('/Users/kulkarniad/utils_rh/') # RH util functions
+from rh import *
+from astropy.io import fits
+import pickle
+from scipy.signal import general_gaussian
+from skimage.util.shape import view_as_windows
+
+
 with open('atmos.pkl', 'rb') as f:
     atmos = pickle.load(f)
 
@@ -17,20 +29,18 @@ def mk_subcubes(arr_in,scube_shape, step):
         raise Exception('(NX - nx)%step_x == 0 ----- subcubes dont overlap correctly')
     if (NY-ny)%dy != 0:
         raise Exception('(NY - ny)%step_y == 0 ----- subcubes dont overlap correctly')
-
-    subcubes = view_as_windows(arr_in, scube_shape, step=step)[0]
+    subcubes = view_as_windows(arr_in, scube_shape, step=step)[0].copy()
     return subcubes
     
 
-# make subcubes:
 for param in atmos.keys():
     if(is3D(atmos[param])):
+        
+        # make subcubes:
         atmos[param] = mk_subcubes(atmos[param],(NZ,210,210), (NZ,190,190)) # hardcoded, change later
 
-# apodize edges
-for param in atmos.keys():
-    exp = 6  # steepness of gaussian smoothing
-    if (is3D(atmos[param])):
+        # apodize edges
+        exp = 6  # steepness of gaussian smoothing
         overlap = 20 # 210 - 190 hardocded
         Ny_scubes,Nx_scubes,NZ,ny,nx = atmos[param].shape
         mid = (nx - overlap)//2
@@ -38,8 +48,7 @@ for param in atmos.keys():
         for j in range(Ny_scubes):
             for i in range(Nx_scubes):
                 for k in range(NZ):
-                    atmos[param][j,i,k] = window * atmos[param][j,i,k] + (1 - window)*np.mean(atmos[param][j,i,k])
-
+                    atmos[param][j,i,k] =  window*atmos[param][j,i,k] + (1 - window)*np.mean(atmos[param][j,i,k])
 
 NHydr = 1
 Ny_scubes,Nx_scubes,nz,ny,nx = atmos['T'].shape
